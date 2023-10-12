@@ -1,0 +1,17 @@
+.tabla{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+table{
+    padding: 1rem ;
+}
+thead tr{
+    background-color: rgb(204, 204, 204);
+}
+
+thead tr td{
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem 0;
+}

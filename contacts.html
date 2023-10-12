@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactos</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <header>
+        <a class="logo" href="#">LOGO</a>
+        <button id="abrir" class="abrir-menu"><i class="fa-solid fa-bars"></i></button>
+        <nav class="nav" id="nav">
+            <button id="cerrar" class="cerrar-menu"><i class="fa-solid fa-xmark icon-abrir"></i></button>
+            <ul class="nav-list">
+                <li><a href="/">INICIO</a></li>
+                <li><a href="/upcoming.html">PROXIMOS EVENTOS</a></li>
+                <li><a href="/past.html">EVENTOS ANTERIORES</a></li>
+                <li><a href="/contacts.html">CONTACTOS</a></li>
+                <li><a href="/stast.html">ESTADISTICAS</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="principal">
+        <h1>Contactos</h1>
+    </section>
+    <section class="formulario">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" type="text" placeholder="Ingrese su nombre" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="email">Correo electronico:</label>
+            <input type="text" placeholder="Ingrese su correo electronico" id="email" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="mensaje">Mensaje:</label>
+            <textarea name="mensaje" id="mensaje" placeholder="Ingrese su mensaje" cols="20" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Enviar" class="boton">
+        </div>
+    </section>
+    <footer>
+        <div class="contenedor">
+            <div class="redes-sociales">
+                <a href="#"><i class="fa-brands fa-instagram rojo"></i></a>
+                <a href="#"><i class="fa-brands fa-whatsapp verde"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook azul"></i></a>
+            </div>
+            <div class="autor">
+                <p>Cohort</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>

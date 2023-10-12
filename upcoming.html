@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proximos eventos</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <header>
+        <a class="logo" href="#">LOGO</a>
+        <button id="abrir" class="abrir-menu"><i class="fa-solid fa-bars"></i></button>
+        <nav class="nav" id="nav">
+            <button id="cerrar" class="cerrar-menu"><i class="fa-solid fa-xmark icon-abrir"></i></button>
+            <ul class="nav-list">
+                <li><a href="/">INICIO</a></li>
+                <li><a href="/upcoming.html">PROXIMOS EVENTOS</a></li>
+                <li><a href="/past.html">EVENTOS ANTERIORES</a></li>
+                <li><a href="/contacts.html">CONTACTOS</a></li>
+                <li><a href="/stast.html">ESTADISTICAS</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="principal">
+        <h1>Proximos eventos</h1>
+    </section>
+    <form class="formulario" id="formulario">
+        <div class="checkboxs">
+            <div class="check-grupo">
+                <input type="checkbox" class="check-box" id="Food">
+                <label for="Food" id="Food">Comida</label>
+            </div>
+            <div class="check-grupo">
+                <input type="checkbox" class="check-box" id="Museum">
+                <label for="Museum" id="Museum">Museo</label>
+            </div>
+            <div class="check-grupo">
+                <input type="checkbox" class="check-box" id="Concert">
+                <label for="Concert">Concierto</label>
+            </div>
+            <div class="check-grupo">
+                <input type="checkbox" class="check-box" id="Race">
+                <label for="Race">Carrera</label>
+            </div>
+            <div class="check-grupo">
+                <input type="checkbox" class="check-box" id="Books">
+                <label for="Books">Libros</label>
+            </div>
+            <div class="check-grupo">
+                <input type="checkbox" class="check-box" id="Cinema">
+                <label for="Cinema">Cine</label>
+            </div>
+            <div class="check-grupo">
+                <input type="checkbox" class="check-box" id="Party">
+                <label for="Party">Fiesta</label>
+            </div>
+        </div>
+        <div class="search">
+            <input type="search" class="input"  id="searchName"  placeholder="Buscar por nombre">
+            <input type="submit" value="Buscar" class="button">
+        </div>
+    </form>
+    <section class="cards" id="card">
+        <!-- <div class="card">
+            <img src="https://s03.s3c.es/imag/_v0/770x420/2/6/2/Compra-online.jpg" class="card-imagen" alt="Avatar">
+            <div class="card-body">
+                <h1>Titulo</h1>
+                <h5>Subtitulo</h5>
+                <p>Texto descricion</p>
+            </div>
+            <div class="card-footer">
+                <p>Precio: $4000</p>
+                <a href="#">Detalles</a>
+            </div>
+        </div> -->
+    </section>
+    <footer>
+        <div class="contenedor">
+            <div class="redes-sociales">
+                <a href="#"><i class="fa-brands fa-instagram rojo"></i></a>
+                <a href="#"><i class="fa-brands fa-whatsapp verde"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook azul"></i></a>
+            </div>
+            <div class="autor">
+                <p>Cohort</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script src="js/events.js"></script>
+</body>
+</html>
