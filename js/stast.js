@@ -445,82 +445,61 @@ let events = [
     }
 ]
 
-const urlActual = window.location.pathname;
+let asistenciaMayor = document.getElementById("evento-asistencia-mayor");
+let asistenciaMenor = document.getElementById("evento-asistencia-menor");
+let capacidadMayor = document.getElementById("evento-capacidad-mayor");
+let tablaProximoEventos = document.getElementById("tabla-proximo")
 
-const card = document.getElementById('card');
-const formulario = document.getElementById("formulario");
-const searchName = document.getElementById('searchName');
+const eventoMayorAsistencia = events.reduce((acumulador, evento) => evento.assistance < acumulador.assistance ? evento : acumulador);
+const eventoMenorAsistencia = events.reduce((acumulador, evento) => evento.assistance > acumulador.assistance ? evento : acumulador);
+const eventoMayorCapacidad = events.reduce((acumulador, evento) => evento.capacity > acumulador.capacity ? evento : acumulador);
 
-let arregloFiltrado = [];
-if (urlActual == '/upcoming.html') {
-    arregloFiltrado = events.filter(evento => new Date(evento.date) > new Date());
-} else if (urlActual == '/past.html') {
-    arregloFiltrado = events.filter(evento => new Date(evento.date) < new Date());
-} else {
-    arregloFiltrado = events;
-}
+asistenciaMayor.innerText = `${Math.round(((eventoMayorAsistencia.assistance * 100) / eventoMayorAsistencia.capacity))} %`
+asistenciaMenor.innerText = `${Math.round(((eventoMenorAsistencia.assistance * 100) / eventoMenorAsistencia.capacity))} %`
+capacidadMayor.innerText = eventoMayorCapacidad.capacity
 
+const eventsUpcoming = events.filter(evento => new Date(evento.date) > new Date());
+const eventsPast = events.filter(evento => new Date(evento.date) < new Date());
 
-const generarCards = (evento) => {
-    let div = document.createElement("div");
-    div.classList.add('card');
-    const contenido = `<img src=${evento.image} class="card-imagen" alt="Avatar">
-    <div class="card-body">
-        <h1>${evento.name}</h1>
-        <h5>${evento.place}</h5>
-        <p class="card-descripcion">${evento.description}</p>
-    </div>
-    <div class="card-footer">
-        <p>Precio: $${evento.price}</p>
-        <a href="details.html?id=${evento._id}">Detalles</a>
-    </div>`
-    div.innerHTML = contenido;
-    return div;
-}
+// 1- Crear 5 filas con eventos ordenados, para la asistencia de futuros usamos estimate
+let eventosFuturos = events.filter(evento => evento.estimate)
 
-arregloFiltrado.forEach(evento => {
-    const lineas = generarCards(evento);
-    card.appendChild(lineas)
-});
-
-
-formulario.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    let checkValor = [...document.querySelectorAll('.check-box')]
-    .filter(input => input.checked)
-    .map(input => input.id);
-    let valor = searchName.value;
-
-    let filtrarValores = filtrarCategoriaYNombre(checkValor,valor);    
-    card.innerHTML = ""
-    if (filtrarValores.length == 0) {
-        alert('No se encontro el evento')
-        arregloFiltrado.forEach(evento => {
-            const lineas = generarCards(evento);
-            card.appendChild(lineas)
-        });
-    } else {
-        filtrarValores.forEach(evento => {
-            const lineas = generarCards(evento);
-            card.appendChild(lineas)
-        });
+let ordenarObjeto = eventosFuturos.sort((a, b) => {
+    if (a.name > b.name) {
+        return 1
     }
-});
-
-const filtrarCategoriaYNombre = (categoria,valor) => {
-    let arraysFilters = [];
-
-    if (categoria.length == 0) {
-        arraysFilters = arregloFiltrado.filter(evento => evento.name.toLowerCase().includes(valor.toLowerCase()));
-    } else {
-        let arrayFilter = [];
-        for (let i = 0; i < categoria.length; i++) {
-            let array =  arregloFiltrado.filter(({category}) => category == categoria[i]); 
-            arrayFilter.push(array)
-        }
-        let unificar = arrayFilter.reduce((acumulador,categoria) => acumulador.concat(categoria),[]);
-        arraysFilters = unificar.filter(evento => evento.name.toLowerCase().includes(valor.toLowerCase()));
+    if (a.name < b.name) {
+        return -1
     }
-    return arraysFilters;
+    return 0
+}).slice(0,5);
+
+const generarFilas = (eventos) => {
+    let porcentaje = Math.round((eventos.estimate * 100) / eventos.capacity);
+    let tr = document.createElement('tr');
+    let contenido = `
+    <td>
+    ${eventos.name}
+    </td>
+    <td>
+    ${eventos.category}
+    </td>
+    <td>
+    $ ${eventos.capacity * eventos.price}
+    </td>
+    <td>
+        ${porcentaje} %
+    </td>
+    `
+    tr.innerHTML = contenido;
+    return tr
 }
+
+
+ordenarObjeto.forEach(eventos => {
+    let linea = generarFilas(eventos);
+    tablaProximoEventos.appendChild(linea)
+})
+
+// 2-Crear un fila por cada categoria y sacar resultados, ganacios de todos los eventos
+//  por categoria, porcentaje total de asistencia por categoria
