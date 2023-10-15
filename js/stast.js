@@ -448,7 +448,8 @@ let events = [
 let asistenciaMayor = document.getElementById("evento-asistencia-mayor");
 let asistenciaMenor = document.getElementById("evento-asistencia-menor");
 let capacidadMayor = document.getElementById("evento-capacidad-mayor");
-let tablaProximoEventos = document.getElementById("tabla-proximo")
+let tablaProximoEventos = document.getElementById("tabla-proximo");
+let tablaPasadoEventos = document.getElementById("tabla-pasado");
 
 const eventoMayorAsistencia = events.reduce((acumulador, evento) => evento.assistance < acumulador.assistance ? evento : acumulador);
 const eventoMenorAsistencia = events.reduce((acumulador, evento) => evento.assistance > acumulador.assistance ? evento : acumulador);
@@ -501,5 +502,41 @@ ordenarObjeto.forEach(eventos => {
     tablaProximoEventos.appendChild(linea)
 })
 
-// 2-Crear un fila por cada categoria y sacar resultados, ganacios de todos los eventos
-//  por categoria, porcentaje total de asistencia por categoria
+const ordenadosPorCategory = events.sort((a, b) => {
+    if (a.category > b.category) {
+        return 1
+    }
+    if (a.category < b.category) {
+        return -1
+    }
+    return 0
+})
+
+let gananciaPorCategoria = {};
+let porcentajeAsistenciaCategoria = {};
+
+ordenadosPorCategory.forEach(categoria => {
+    if (categoria.assistance != undefined) {
+        const precioTotal = categoria.price * categoria.assistance;
+        if (gananciaPorCategoria[categoria.category]) {
+            gananciaPorCategoria[categoria.category] += precioTotal
+        } else {
+            gananciaPorCategoria[categoria.category] = precioTotal;
+        }
+    }
+    if (categoria.assistance != undefined) {
+        if (porcentajeAsistenciaCategoria[categoria.category]) {
+            porcentajeAsistenciaCategoria[categoria.category] += Math.round((Number(categoria.assistance) / Number(categoria.capacity))) * 10
+        } else {
+            porcentajeAsistenciaCategoria[categoria.category] = Math.round((Number(categoria.assistance) / Number(categoria.capacity))) * 10
+        }
+    }
+});
+
+for (let i = 0; i < Object.keys(gananciaPorCategoria).length; i++) {
+    let tr = document.createElement('tr');
+    tr.innerHTML = `<td>${Object.keys(gananciaPorCategoria)[i]}</td>
+    <td>$ ${Object.values(gananciaPorCategoria)[i]}</td>
+    <td>${Object.values(porcentajeAsistenciaCategoria)[i]} %</td>`;
+    tablaPasadoEventos.appendChild(tr)
+}

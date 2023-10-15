@@ -83,6 +83,34 @@ header{
     font-size: 2rem;
 }
 
+.ocultar{
+    display: none;
+}
+
+.mostrar{
+    display: block;
+}
+
+.ir-arriba-contenedor{
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    background-color: green;
+    border-radius: 50%;
+    z-index: 0;
+    cursor: pointer;
+}
+
+.ir-arriba-boton i{
+    font-size: 1.4rem;
+    color: white;
+    position: absolute;
+    top: 20px;
+    left: 22px;
+}
+
 footer{
     background-color: #ececec;
 }
@@ -111,6 +139,11 @@ footer .contenedor{
 .autor p{
     font-size: 3rem;
     font-weight: bold;
+}
+@media (max-width: 980px) {
+    .nav-list{
+        font-size: 12px;
+    }
 }
 @media (max-width: 765px) {
     header{
