@@ -452,10 +452,11 @@ const formulario = document.getElementById("formulario");
 const searchName = document.getElementById('searchName');
 
 let arregloFiltrado = [];
+
 if (urlActual == '/upcoming.html') {
-    arregloFiltrado = events.filter(evento => new Date(evento.date) > new Date());
+    arregloFiltrado = events.filter(evento => evento.estimate != undefined);
 } else if (urlActual == '/past.html') {
-    arregloFiltrado = events.filter(evento => new Date(evento.date) < new Date());
+    arregloFiltrado = events.filter(evento => evento.assistance != undefined);
 } else {
     arregloFiltrado = events;
 }

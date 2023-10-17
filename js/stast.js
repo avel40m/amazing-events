@@ -449,79 +449,32 @@ let asistenciaMayor = document.getElementById("evento-asistencia-mayor");
 let asistenciaMenor = document.getElementById("evento-asistencia-menor");
 let capacidadMayor = document.getElementById("evento-capacidad-mayor");
 let tablaProximoEventos = document.getElementById("tabla-proximo");
-let tablaPasadoEventos = document.getElementById("tabla-pasado");
+let tablaPasadoEventos = document.getElementById("tabla-pasada");
 
 const eventoMayorAsistencia = events.reduce((acumulador, evento) => evento.assistance < acumulador.assistance ? evento : acumulador);
 const eventoMenorAsistencia = events.reduce((acumulador, evento) => evento.assistance > acumulador.assistance ? evento : acumulador);
 const eventoMayorCapacidad = events.reduce((acumulador, evento) => evento.capacity > acumulador.capacity ? evento : acumulador);
 
-asistenciaMayor.innerText = `${Math.round(((eventoMayorAsistencia.assistance * 100) / eventoMayorAsistencia.capacity))} %`
-asistenciaMenor.innerText = `${Math.round(((eventoMenorAsistencia.assistance * 100) / eventoMenorAsistencia.capacity))} %`
+asistenciaMayor.innerHTML = `<b>${eventoMayorAsistencia.name}</b> - ${Math.round(((eventoMayorAsistencia.assistance * 100) / eventoMayorAsistencia.capacity))} %`
+asistenciaMenor.innerHTML = `<b>${eventoMenorAsistencia.name}</b> - ${Math.round(((eventoMenorAsistencia.assistance * 100) / eventoMenorAsistencia.capacity))} %`
 capacidadMayor.innerText = eventoMayorCapacidad.capacity
 
-const eventsUpcoming = events.filter(evento => new Date(evento.date) > new Date());
-const eventsPast = events.filter(evento => new Date(evento.date) < new Date());
+let gananciaPorCategoriaFuturas = {};
+let porcentajeEstimadosCategoria = {};
 
-// 1- Crear 5 filas con eventos ordenados, para la asistencia de futuros usamos estimate
-let eventosFuturos = events.filter(evento => evento.estimate)
-
-let ordenarObjeto = eventosFuturos.sort((a, b) => {
-    if (a.name > b.name) {
-        return 1
-    }
-    if (a.name < b.name) {
-        return -1
-    }
-    return 0
-}).slice(0,5);
-
-const generarFilas = (eventos) => {
-    let porcentaje = Math.round((eventos.estimate * 100) / eventos.capacity);
-    let tr = document.createElement('tr');
-    let contenido = `
-    <td>
-    ${eventos.name}
-    </td>
-    <td>
-    ${eventos.category}
-    </td>
-    <td>
-    $ ${eventos.capacity * eventos.price}
-    </td>
-    <td>
-        ${porcentaje} %
-    </td>
-    `
-    tr.innerHTML = contenido;
-    return tr
-}
-
-
-ordenarObjeto.forEach(eventos => {
-    let linea = generarFilas(eventos);
-    tablaProximoEventos.appendChild(linea)
-})
-
-const ordenadosPorCategory = events.sort((a, b) => {
-    if (a.category > b.category) {
-        return 1
-    }
-    if (a.category < b.category) {
-        return -1
-    }
-    return 0
-})
-
-let gananciaPorCategoria = {};
+let gananciaPorCategoriaPasadas = {};
 let porcentajeAsistenciaCategoria = {};
 
-ordenadosPorCategory.forEach(categoria => {
+let eventoFuturos = events.filter(evento => new Date(evento.date) > new Date());
+let eventoPasados = events.filter(evento => new Date(evento.date) < new Date());
+
+eventoPasados.forEach(categoria => {
     if (categoria.assistance != undefined) {
         const precioTotal = categoria.price * categoria.assistance;
-        if (gananciaPorCategoria[categoria.category]) {
-            gananciaPorCategoria[categoria.category] += precioTotal
+        if (gananciaPorCategoriaPasadas[categoria.category]) {
+            gananciaPorCategoriaPasadas[categoria.category] += precioTotal
         } else {
-            gananciaPorCategoria[categoria.category] = precioTotal;
+            gananciaPorCategoriaPasadas[categoria.category] = precioTotal;
         }
     }
     if (categoria.assistance != undefined) {
@@ -532,11 +485,36 @@ ordenadosPorCategory.forEach(categoria => {
         }
     }
 });
+eventoFuturos.forEach(categoria => {
+    if (categoria.estimate != undefined) {
+        const precioTotal = categoria.price * categoria.estimate;
+        if (gananciaPorCategoriaFuturas[categoria.category]) {
+            gananciaPorCategoriaFuturas[categoria.category] += precioTotal
+        } else {
+            gananciaPorCategoriaFuturas[categoria.category] = precioTotal;
+        }
+    }
+    if (categoria.estimate != undefined) {
+        if (porcentajeEstimadosCategoria[categoria.category]) {
+            porcentajeEstimadosCategoria[categoria.category] += Math.round((Number(categoria.estimate) / Number(categoria.capacity))) * 10
+        } else {
+            porcentajeEstimadosCategoria[categoria.category] = Math.round((Number(categoria.estimate) / Number(categoria.capacity))) * 10
+        }
+    }
+});
 
-for (let i = 0; i < Object.keys(gananciaPorCategoria).length; i++) {
+for (let i = 0; i < Object.keys(gananciaPorCategoriaPasadas).length; i++) {
     let tr = document.createElement('tr');
-    tr.innerHTML = `<td>${Object.keys(gananciaPorCategoria)[i]}</td>
-    <td>$ ${Object.values(gananciaPorCategoria)[i]}</td>
+    tr.innerHTML = `<td>${Object.keys(gananciaPorCategoriaPasadas)[i]}</td>
+    <td>$ ${Object.values(gananciaPorCategoriaPasadas)[i]}</td>
     <td>${Object.values(porcentajeAsistenciaCategoria)[i]} %</td>`;
     tablaPasadoEventos.appendChild(tr)
+}
+
+for (let i = 0; i < Object.keys(gananciaPorCategoriaFuturas).length; i++) {
+    let tr = document.createElement('tr');
+    tr.innerHTML = `<td>${Object.keys(gananciaPorCategoriaFuturas)[i]}</td>
+    <td>$ ${Object.values(gananciaPorCategoriaFuturas)[i]}</td>
+    <td>${Object.values(porcentajeEstimadosCategoria)[i]} %</td>`;
+    tablaProximoEventos.appendChild(tr)
 }
