@@ -465,8 +465,8 @@ let porcentajeEstimadosCategoria = {};
 let gananciaPorCategoriaPasadas = {};
 let porcentajeAsistenciaCategoria = {};
 
-let eventoFuturos = events.filter(evento => new Date(evento.date) > new Date());
-let eventoPasados = events.filter(evento => new Date(evento.date) < new Date());
+let eventoFuturos = events.filter(evento => evento.estimate != undefined);
+let eventoPasados = events.filter(evento => evento.assistance != undefined);
 
 eventoPasados.forEach(categoria => {
     if (categoria.assistance != undefined) {

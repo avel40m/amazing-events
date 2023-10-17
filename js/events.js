@@ -452,7 +452,6 @@ const formulario = document.getElementById("formulario");
 const searchName = document.getElementById('searchName');
 
 let arregloFiltrado = [];
-
 if (urlActual == '/upcoming.html') {
     arregloFiltrado = events.filter(evento => evento.estimate != undefined);
 } else if (urlActual == '/past.html') {
@@ -487,10 +486,14 @@ arregloFiltrado.forEach(evento => {
 
 formulario.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    let checkValor = [...document.querySelectorAll('.check-box')]
-    .filter(input => input.checked)
-    .map(input => input.id);
+    let checkBox = document.querySelectorAll('input[type="checkbox"]');
+    let checkValor = []
+    checkBox.forEach(check => {
+        if (check.checked) {
+            checkValor.push(check.id)
+        }
+    })
+
     let valor = searchName.value;
 
     let filtrarValores = filtrarCategoriaYNombre(checkValor,valor);    
