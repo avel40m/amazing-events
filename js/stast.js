@@ -457,7 +457,7 @@ const eventoMayorCapacidad = events.reduce((acumulador, evento) => evento.capaci
 
 asistenciaMayor.innerHTML = `<b>${eventoMayorAsistencia.name}</b> - ${Math.round(((eventoMayorAsistencia.assistance * 100) / eventoMayorAsistencia.capacity))} %`
 asistenciaMenor.innerHTML = `<b>${eventoMenorAsistencia.name}</b> - ${Math.round(((eventoMenorAsistencia.assistance * 100) / eventoMenorAsistencia.capacity))} %`
-capacidadMayor.innerText = eventoMayorCapacidad.capacity
+capacidadMayor.innerHTML = `<b>${eventoMayorCapacidad.name}</b> -${eventoMayorCapacidad.capacity}`
 
 let gananciaPorCategoriaFuturas = {};
 let porcentajeEstimadosCategoria = {};
