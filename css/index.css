@@ -44,6 +44,11 @@ header{
     display: flex;
     gap: 1rem;
 }
+.active{
+    color: #15a4de;
+    font-weight: 700;
+    border-bottom: 1px solid;
+}
 
 .nav-list li a{
     color: #18272F;
@@ -69,6 +74,7 @@ header{
     transform-origin: left;
     transform: scaleX(1);
 }
+
 
 .abrir-menu,.cerrar-menu{
     display: none;

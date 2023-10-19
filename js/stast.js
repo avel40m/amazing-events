@@ -3,6 +3,14 @@ let asistenciaMenor = document.getElementById("evento-asistencia-menor");
 let capacidadMayor = document.getElementById("evento-capacidad-mayor");
 let tablaProximoEventos = document.getElementById("tabla-proximo");
 let tablaPasadoEventos = document.getElementById("tabla-pasada");
+const navs = document.querySelectorAll("nav li a");
+const locacion = window.location.pathname;
+
+navs.forEach(link => {
+    if (link.href.split('/')[3] == locacion.split('/')[1]) {
+        link.classList.add('active')
+    }
+})
 
 const ejecutarPrograma = async () => {
     let events = [];

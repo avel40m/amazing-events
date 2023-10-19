@@ -4,6 +4,7 @@ const card = document.getElementById('card');
 const formulario = document.getElementById("formulario");
 const searchName = document.getElementById('searchName');
 const loader = document.getElementById('loader');
+const cantidadEvento = document.getElementById('cantidad-evento');
 
 const ejecutarPrograma = async () => {
     let events = [];
@@ -26,7 +27,7 @@ const ejecutarPrograma = async () => {
         const lineas = generarCards(evento);
         card.appendChild(lineas)
     });
-
+    cantidadEvento.innerHTML = `(${arregloFiltrado.length})`
     formulario.addEventListener('submit', (e) => {
         e.preventDefault();
         filtrarCards(arregloFiltrado);
@@ -72,14 +73,15 @@ const filtrarCards = (arregloFiltrado) => {
         arregloFiltrado.forEach(evento => {
             const lineas = generarCards(evento);
             card.appendChild(lineas)
+            cantidadEvento.innerHTML = `(${arregloFiltrado.length})`
         });
     } else {
         filtrarValores.forEach(evento => {
             const lineas = generarCards(evento);
             card.appendChild(lineas)
         });
+        cantidadEvento.innerHTML = `(${filtrarValores.length})`
     }
-
 }
 
 const filtrarCategoriaYNombre = (arregloFiltrado,categoria, valor) => {
